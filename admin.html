@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Admin - HK & ARRAY SUITS | Upload from PC/Phone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+        }
+        .login-container, .admin-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid #d4af37;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #d4af37;
+            background: #2a2a2a;
+            color: white;
+        }
+        button {
+            background: linear-gradient(135deg, #d4af37, #b8960c);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .upload-area {
+            border: 2px dashed #d4af37;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #1a1a1a;
+        }
+        .upload-area:hover, .upload-area.drag-over {
+            border-color: #fff;
+            background: #2a2a2a;
+        }
+        .upload-area i {
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+            margin: 10px;
+        }
+        .item-card {
+            background: #2a2a2a;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #d4af37;
+        }
+        .delete-btn, .edit-btn {
+            width: auto;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+        }
+        .delete-btn { background: #ff4444; color: white; }
+        .edit-btn { background: #2563eb; color: white; }
+        .action-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        h2, h3 { color: #d4af37; }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid #444; padding-bottom: 1rem; flex-wrap: wrap; }
+        .tab-btn { width: auto; padding: 10px 20px; background: #2a2a2a; color: white; border: none; cursor: pointer; }
+        .tab-btn.active { background: #d4af37; color: #000; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .preview-img { width: 80px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 15px; }
+        .stats { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .stat-card { background: #1a1a1a; padding: 0.8rem 1.5rem; border-radius: 10px; border-left: 3px solid #d4af37; }
+        hr { border-color: #444; margin: 1rem 0; }
+        .image-preview-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; justify-content: center; }
+        .password-section {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #d4af37;
+        }
+        .success-msg {
+            background: #10b981;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .error-msg {
+            background: #ef4444;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .btn-small {
+            width: auto;
+            padding: 8px 20px;
+            margin-top: 5px;
+        }
+        .empty-state-admin {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div id="loginPanel" class="login-container">
+    <h2><i class="fas fa-crown"></i> Admin Login</h2>
+    <input type="password" id="adminPassword" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+    <p style="margin-top:1rem;">Default: <strong style="color:#d4af37;">admin123</strong></p>
+    <p style="font-size:0.8rem; margin-top:0.5rem;">You can change password after login</p>
+</div>
+
+<div id="adminPanel" style="display:none;">
+    <div class="admin-container">
+        <h2><i class="fas fa-crown"></i> HK & ARRAY SUITS - Admin Control</h2>
+        <p style="margin-bottom:1rem;">✅ <strong>Upload photos directly from your PC or Phone!</strong> Click or drag images.</p>
+        
+        <!-- CHANGE PASSWORD SECTION -->
+        <div class="password-section">
+            <h3><i class="fas fa-key"></i> Change Admin Password</h3>
+            <div id="passwordMessage"></div>
+            <input type="password" id="currentPassword" placeholder="Current Password">
+            <input type="password" id="newPassword" placeholder="New Password (min 4 characters)">
+            <input type="password" id="confirmPassword" placeholder="Confirm New Password">
+            <button class="btn-small" onclick="changePassword()"><i class="fas fa-save"></i> Update Password</button>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('suits')">👔 Manage Suits</button>
+            <button class="tab-btn" onclick="showTab('fabrics')">🧵 Manage Fabrics</button>
+            <button class="tab-btn" onclick="showTab('orders')">📦 Manage Orders</button>
+        </div>
+        
+        <!-- SUITS TAB -->
+        <div id="suitsTab" class="tab-content active">
+            <h3><i class="fas fa-upload"></i> Add New Suit - Upload Photo</h3>
+            <div id="suitUploadArea" class="upload-area" onclick="document.getElementById('suitFileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>📸 Click or Drag & Drop an image/video here</p>
+                <p style="font-size:0.8rem;">From PC: Click and select file | From Phone: Tap to take photo or choose from gallery</p>
+                <input type="file" id="suitFileInput" accept="image/*,video/*" style="display:none" onchange="previewSuitImage(this)">
+                <div id="suitImagePreview" class="image-preview-container"></div>
+            </div>
+            <input type="hidden" id="uploadedSuitUrl" value="">
+            
+            <select id="suitCategory">
+                <option value="wedding">👰 Wedding Suit</option>
+                <option value="office">💼 Office Suit</option>
+                <option value="prom">🎉 Prom Suit</option>
+                <option value="graduation">🎓 Graduation Suit</option>
+                <option value="cultural">🪘 Cultural Suit</option>
+            </select>
+            <select id="mediaType">
+                <option value="image">📷 Photo</option>
+                <option value="video">🎥 Video</option>
+            </select>
+            <input type="text" id="suitTitle" placeholder="Suit Name (e.g., Royal Wedding Tuxedo)" required>
+            <input type="text" id="suitPrice" placeholder="Price (e.g., UGX 750,000)" required>
+            <textarea id="suitDesc" placeholder="Description" rows="2"></textarea>
+            <button id="addSuitBtn"><i class="fas fa-plus"></i> Add Suit</button>
+            
+            <hr>
+            <div class="stats"><div class="stat-card">Total Suits: <span id="suitCount">0</span></div></div>
+            <div id="suitsList"></div>
+        </div>
+        
+        <!-- FABRICS TAB -->
+        <div id="fabricsTab" class="tab-content">
+            <h3><i class="fas fa-upload"></i> Add New Fabric - Upload Photo</h3>
+            <div id="fabricUploadArea" class="upload-area" onclick="document.getElementById('fabricFileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>📸 Click or Drag & Drop fabric image here</p>
+                <input type="file" id="fabricFileInput" accept="image/*" style="display:none" onchange="previewFabricImage(this)">
+                <div id="fabricImagePreview" class="image-preview-container"></div>
+            </div>
+            <input type="hidden" id="uploadedFabricUrl" value="">
+            
+            <input type="text" id="fabricName" placeholder="Fabric Name (e.g., Italian Wool)" required>
+            <input type="text" id="fabricPrice" placeholder="Price (e.g., UGX 120,000/m)" required>
+            <textarea id="fabricDesc" placeholder="Description" rows="2"></textarea>
+            <button id="addFabricBtn"><i class="fas fa-plus"></i> Add Fabric</button>
+            
+            <hr>
+            <div class="stats"><div class="stat-card">Total Fabrics: <span id="fabricCount">0</span></div></div>
+            <div id="fabricsList"></div>
+        </div>
+        
+        <!-- ORDERS TAB -->
+        <div id="ordersTab" class="tab-content">
+            <h3>Manage Customer Orders</h3>
+            <div class="stats">
+                <div class="stat-card">Total Orders: <span id="orderCount">0</span></div>
+                <div class="stat-card">Pending: <span id="pendingCount">0</span></div>
+                <div class="stat-card">Completed: <span id="completedCount">0</span></div>
+            </div>
+            <div id="ordersList"></div>
+        </div>
+        
+        <button onclick="logout()" style="background:#555; margin-top:1rem;">Logout</button>
+    </div>
+</div>
+
+<script>
+    let ADMIN_PASSWORD = "admin123";
+    let currentSuitImageData = null;
+    let currentFabricImageData = null;
+    
+    function loadSavedPassword() {
+        const savedPassword = localStorage.getItem('hk_array_admin_password');
+        if (savedPassword) ADMIN_PASSWORD = savedPassword;
+    }
+    
+    function savePassword(newPassword) {
+        localStorage.setItem('hk_array_admin_password', newPassword);
+        ADMIN_PASSWORD = newPassword;
+    }
+    
+    function login() {
+        loadSavedPassword();
+        const enteredPassword = document.getElementById('adminPassword').value;
+        if (enteredPassword === ADMIN_PASSWORD) {
+            document.getElementById('loginPanel').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadAllData();
+            setupDragAndDrop();
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('passwordMessage').innerHTML = '';
+        } else {
+            alert('❌ Wrong password!');
+        }
+    }
+    
+    window.changePassword = function() {
+        const currentPwd = document.getElementById('currentPassword').value;
+        const newPwd = document.getElementById('newPassword').value;
+        const confirmPwd = document.getElementById('confirmPassword').value;
+        const messageDiv = document.getElementById('passwordMessage');
+        
+        if (currentPwd !== ADMIN_PASSWORD) {
+            messageDiv.innerHTML = '<div class="error-msg">❌ Current password is incorrect!</div>';
+            return;
+        }
+        if (newPwd.length < 4) {
+            messageDiv.innerHTML = '<div class="error-msg">❌ New password must be at least 4 characters!</div>';
+            return;
+        }
+        if (newPwd !== confirmPwd) {
+            messageDiv.innerHTML = '<div class="error-msg">❌ New passwords do not match!</div>';
+            return;
+        }
+        
+        savePassword(newPwd);
+        messageDiv.innerHTML = '<div class="success-msg">✅ Password changed successfully! Use your new password next login.</div>';
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        setTimeout(() => messageDiv.innerHTML = '', 3000);
+    };
+    
+    function logout() {
+        document.getElementById('loginPanel').style.display = 'block';
+        document.getElementById('adminPanel').style.display = 'none';
+        document.getElementById('adminPassword').value = '';
+    }
+    
+    function loadAllData() {
+        loadSuits();
+        loadFabrics();
+        loadOrders();
+    }
+    
+    function showTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById(`${tab}Tab`).classList.add('active');
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        if(tab === 'suits') loadSuits();
+        else if(tab === 'fabrics') loadFabrics();
+        else loadOrders();
+    }
+    
+    function setupDragAndDrop() {
+        const suitArea = document.getElementById('suitUploadArea');
+        const fabricArea = document.getElementById('fabricUploadArea');
+        
+        [suitArea, fabricArea].forEach(area => {
+            if(area) {
+                area.addEventListener('dragover', (e) => { e.preventDefault(); area.classList.add('drag-over'); });
+                area.addEventListener('dragleave', () => { area.classList.remove('drag-over'); });
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.classList.remove('drag-over');
+                    const file = e.dataTransfer.files[0];
+                    if(area.id === 'suitUploadArea') handleSuitFile(file);
+                    else handleFabricFile(file);
+                });
+            }
+        });
+    }
+    
+    function handleSuitFile(file) {
+        if(file && (file.type.startsWith('image/') || file.type.startsWith('video/'))) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentSuitImageData = e.target.result;
+                document.getElementById('uploadedSuitUrl').value = currentSuitImageData;
+                document.getElementById('suitImagePreview').innerHTML = `<img src="${currentSuitImageData}" class="thumbnail"><p>✅ Ready!</p>`;
+            };
+            reader.readAsDataURL(file);
+        } else { alert('Please select an image or video file'); }
+    }
+    
+    function handleFabricFile(file) {
+        if(file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentFabricImageData = e.target.result;
+                document.getElementById('uploadedFabricUrl').value = currentFabricImageData;
+                document.getElementById('fabricImagePreview').innerHTML = `<img src="${currentFabricImageData}" class="thumbnail"><p>✅ Ready!</p>`;
+            };
+            reader.readAsDataURL(file);
+        } else { alert('Please select an image file'); }
+    }
+    
+    window.previewSuitImage = function(input) {
+        if(input.files && input.files[0]) handleSuitFile(input.files[0]);
+    };
+    
+    window.previewFabricImage = function(input) {
+        if(input.files && input.files[0]) handleFabricFile(input.files[0]);
+    };
+    
+    // SUITS
+    function loadSuits() {
+        let suits = JSON.parse(localStorage.getItem('hk_array_suits')) || [];
+        document.getElementById('suitCount').innerText = suits.length;
+        const container = document.getElementById('suitsList');
+        if(suits.length === 0) { 
+            container.innerHTML = '<div class="empty-state-admin">📸 No suits yet. Upload your first suit above!</div>'; 
+            return; 
+        }
+        container.innerHTML = suits.map((suit, idx) => `
+            <div class="item-card">
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <img src="${suit.url}" class="preview-img" onerror="this.src='https://placehold.co/400x400/333/fff?text=Image'">
+                    <div style="flex:1;"><strong>${suit.title}</strong> - ${suit.price}<br>Category: ${suit.category}</div>
+                    <div class="action-buttons">
+                        <button class="edit-btn" onclick="editSuit(${idx})"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="delete-btn" onclick="deleteSuit(${idx})"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    window.deleteSuit = function(index) {
+        if(confirm('Delete this suit permanently?')) {
+            let suits = JSON.parse(localStorage.getItem('hk_array_suits')) || [];
+            suits.splice(index, 1);
+            localStorage.setItem('hk_array_suits', JSON.stringify(suits));
+            loadSuits();
+            alert('✅ Suit deleted!');
+        }
+    };
+    
+    window.editSuit = function(index) {
+        let suits = JSON.parse(localStorage.getItem('hk_array_suits')) || [];
+        const suit = suits[index];
+        const newTitle = prompt('Edit Suit Name:', suit.title);
+        const newPrice = prompt('Edit Price:', suit.price);
+        if(newTitle) suit.title = newTitle;
+        if(newPrice) suit.price = newPrice;
+        localStorage.setItem('hk_array_suits', JSON.stringify(suits));
+        loadSuits();
+        alert('✅ Suit updated!');
+    };
+    
+    document.getElementById('addSuitBtn')?.addEventListener('click', () => {
+        let suits = JSON.parse(localStorage.getItem('hk_array_suits')) || [];
+        const imageUrl = document.getElementById('uploadedSuitUrl').value;
+        if(!imageUrl) { alert('❌ Please upload an image first!'); return; }
+        const newSuit = {
+            id: Date.now(),
+            category: document.getElementById('suitCategory').value,
+            type: document.getElementById('mediaType').value,
+            url: imageUrl,
+            title: document.getElementById('suitTitle').value,
+            price: document.getElementById('suitPrice').value,
+            desc: document.getElementById('suitDesc').value || 'Premium quality suit'
+        };
+        suits.push(newSuit);
+        localStorage.setItem('hk_array_suits', JSON.stringify(suits));
+        alert('✅ Suit added with your photo!');
+        document.getElementById('suitTitle').value = '';
+        document.getElementById('suitPrice').value = '';
+        document.getElementById('suitDesc').value = '';
+        document.getElementById('uploadedSuitUrl').value = '';
+        document.getElementById('suitImagePreview').innerHTML = '';
+        currentSuitImageData = null;
+        loadSuits();
+    });
+    
+    // FABRICS
+    function loadFabrics() {
+        let fabrics = JSON.parse(localStorage.getItem('hk_array_fabrics')) || [];
+        document.getElementById('fabricCount').innerText = fabrics.length;
+        const container = document.getElementById('fabricsList');
+        if(fabrics.length === 0) { 
+            container.innerHTML = '<div class="empty-state-admin">🧵 No fabrics yet. Upload your first fabric above!</div>'; 
+            return; 
+        }
+        container.innerHTML = fabrics.map((fabric, idx) => `
+            <div class="item-card">
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <img src="${fabric.image}" class="preview-img" onerror="this.src='https://placehold.co/400x400/333/fff?text=Fabric'">
+                    <div style="flex:1;"><strong>${fabric.name}</strong> - ${fabric.price}</div>
+                    <div class="action-buttons">
+                        <button class="edit-btn" onclick="editFabric(${idx})"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="delete-btn" onclick="deleteFabric(${idx})"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    window.deleteFabric = function(index) {
+        if(confirm('Delete this fabric?')) {
+            let fabrics = JSON.parse(localStorage.getItem('hk_array_fabrics')) || [];
+            fabrics.splice(index, 1);
+            localStorage.setItem('hk_array_fabrics', JSON.stringify(fabrics));
+            loadFabrics();
+            alert('✅ Fabric deleted!');
+        }
+    };
+    
+    window.editFabric = function(index) {
+        let fabrics = JSON.parse(localStorage.getItem('hk_array_fabrics')) || [];
+        const fabric = fabrics[index];
+        const newName = prompt('Edit Fabric Name:', fabric.name);
+        const newPrice = prompt('Edit Price:', fabric.price);
+        if(newName) fabric.name = newName;
+        if(newPrice) fabric.price = newPrice;
+        localStorage.setItem('hk_array_fabrics', JSON.stringify(fabrics));
+        loadFabrics();
+        alert('✅ Fabric updated!');
+    };
+    
+    document.getElementById('addFabricBtn')?.addEventListener('click', () => {
+        let fabrics = JSON.parse(localStorage.getItem('hk_array_fabrics')) || [];
+        const imageUrl = document.getElementById('uploadedFabricUrl').value;
+        if(!imageUrl) { alert('❌ Please upload a fabric image first!'); return; }
+        const newFabric = {
+            id: Date.now(),
+            name: document.getElementById('fabricName').value,
+            price: document.getElementById('fabricPrice').value,
+            image: imageUrl,
+            description: document.getElementById('fabricDesc').value || 'Premium quality fabric'
+        };
+        fabrics.push(newFabric);
+        localStorage.setItem('hk_array_fabrics', JSON.stringify(fabrics));
+        alert('✅ Fabric added with your photo!');
+        document.getElementById('fabricName').value = '';
+        document.getElementById('fabricPrice').value = '';
+        document.getElementById('fabricDesc').value = '';
+        document.getElementById('uploadedFabricUrl').value = '';
+        document.getElementById('fabricImagePreview').innerHTML = '';
+        currentFabricImageData = null;
+        loadFabrics();
+    });
+    
+    // ORDERS
+    function loadOrders() {
+        let orders = JSON.parse(localStorage.getItem('hk_array_orders')) || [];
+        document.getElementById('orderCount').innerText = orders.length;
+        document.getElementById('pendingCount').innerText = orders.filter(o => o.status !== 'delivered').length;
+        document.getElementById('completedCount').innerText = orders.filter(o => o.status === 'delivered').length;
+        const container = document.getElementById('ordersList');
+        if(orders.length === 0) { 
+            container.innerHTML = '<div class="empty-state-admin">📦 No orders yet.</div>'; 
+            return; 
+        }
+        container.innerHTML = orders.map((order, idx) => `
+            <div class="item-card">
+                <div><strong>${order.orderNumber}</strong> | <span style="color:#d4af37;">${order.status}</span></div>
+                <div>${order.customerName} | ${order.phone}</div>
+                <div>Suit: ${order.suitName} | UGX ${order.price}</div>
+                <div class="action-buttons">
+                    <select onchange="updateOrderStatus(${idx}, this.value)">
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="cutting" ${order.status === 'cutting' ? 'selected' : ''}>Cutting</option>
+                        <option value="sewing" ${order.status === 'sewing' ? 'selected' : ''}>Sewing</option>
+                        <option value="quality" ${order.status === 'quality' ? 'selected' : ''}>Quality Check</option>
+                        <option value="ready" ${order.status === 'ready' ? 'selected' : ''}>Ready</option>
+                        <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                    </select>
+                    <button class="delete-btn" onclick="deleteOrder(${idx})">Delete</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    window.updateOrderStatus = function(index, newStatus) {
+        let orders = JSON.parse(localStorage.getItem('hk_array_orders')) || [];
+        orders[index].status = newStatus;
+        localStorage.setItem('hk_array_orders', JSON.stringify(orders));
+        alert(`Status updated to: ${newStatus}`);
+        loadOrders();
+    };
+    
+    window.deleteOrder = function(index) {
+        if(confirm('Delete this order?')) {
+            let orders = JSON.parse(localStorage.getItem('hk_array_orders')) || [];
+            orders.splice(index, 1);
+            localStorage.setItem('hk_array_orders', JSON.stringify(orders));
+            loadOrders();
+        }
+    };
+    
+    loadSavedPassword();
+</script>
+</body>
+</html>

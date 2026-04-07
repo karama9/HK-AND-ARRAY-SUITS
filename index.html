@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HK & ARRAY SUITS | Premium Bespoke Tailoring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+        }
+
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f5e6a3;
+            --gold-dark: #b8960c;
+            --black: #0a0a0a;
+            --blue: #1e3a8a;
+            --blue-light: #2563eb;
+            --green: #10b981;
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.06;
+            z-index: 9999;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            pointer-events: none;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--gold);
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo p {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 5rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .hero h2 {
+            font-size: 2.8rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .hero h2 span {
+            color: var(--gold);
+        }
+        .btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000;
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+            text-decoration: none;
+            margin: 0.5rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212,175,55,0.3);
+        }
+
+        .section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: auto;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--gold);
+            padding-left: 1.2rem;
+            color: var(--gold);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        .category-btn {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+        .category-btn:hover, .category-btn.active {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .suit-card {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(212,175,55,0.3);
+            transition: 0.3s;
+            position: relative;
+        }
+        .suit-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+        }
+        .suit-card img, .suit-card video {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+        }
+        .suit-category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--gold);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .suit-info {
+            padding: 1.5rem;
+        }
+        .suit-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+        .suit-price {
+            color: var(--gold);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .suit-desc {
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            color: #bbb;
+        }
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .order-btn, .whatsapp-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+        }
+        .order-btn {
+            background: var(--blue);
+            color: white;
+            border: none;
+        }
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border-radius: 20px;
+            border: 1px dashed var(--gold);
+        }
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        .empty-state p {
+            color: #aaa;
+        }
+
+        .fabrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .fabric-card {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(212,175,55,0.3);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .fabric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+        .fabric-card.selected {
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 20px rgba(212,175,55,0.3);
+        }
+        .fabric-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .fabric-info {
+            padding: 1rem;
+        }
+        .fabric-name {
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .fabric-price {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        .select-fabric-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .tracking-container {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        .tracking-search {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .tracking-search input {
+            flex: 1;
+            padding: 15px;
+            border-radius: 30px;
+            border: 1px solid var(--gold);
+            background: #2a2a2a;
+            color: white;
+        }
+        .order-status-timeline {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            gap: 0.5rem;
+        }
+        .status-step {
+            flex: 1;
+            text-align: center;
+            min-width: 80px;
+        }
+        .status-step .step-icon {
+            width: 50px;
+            height: 50px;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+        }
+        .status-step.completed .step-icon {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #000;
+        }
+        .status-step.active .step-icon {
+            border-color: var(--gold);
+            color: var(--gold);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .form-container {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 30px;
+            background: #2a2a2a;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .review-card {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        .stars {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        .payment-btn {
+            background: #2a2a2a;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        .payment-btn:hover {
+            border-color: var(--gold);
+        }
+
+        .quote-slider {
+            background: linear-gradient(135deg, #1a1a2e, #0a0a0a);
+            padding: 2rem;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            border-top: 2px solid var(--gold);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        /* Google Maps Section */
+        .map-container {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(212,175,55,0.3);
+            margin-top: 1rem;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+        .shop-info-card {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(212,175,55,0.3);
+            margin-bottom: 1.5rem;
+        }
+        .shop-info-card i {
+            color: var(--gold);
+            width: 30px;
+            margin-right: 10px;
+        }
+        .get-directions-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background: var(--gold);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #050505;
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid var(--gold);
+        }
+
+        .admin-login-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--gold);
+            color: #000;
+            padding: 8px 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 999;
+            font-size: 0.8rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            z-index: 999;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 1.8rem; }
+            .nav-links { margin-top: 1rem; justify-content: center; width: 100%; }
+            .category-btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+            .map-container iframe { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="watermark">HK & ARRAY SUITS | PREMIUM BESPOKE</div>
+<a href="admin.html" class="admin-login-btn"><i class="fas fa-crown"></i> Admin</a>
+<a href="https://wa.me/256778145979" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<nav>
+    <div class="logo">
+        <h1>HK & ARRAY SUITS</h1>
+        <p>WEDDING • OFFICE • PROM • GRADUATION • CULTURAL</p>
+    </div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#fabrics">Fabrics</a>
+        <a href="#tracking">Track Order</a>
+        <a href="#location">Location</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#appointment">Appointment</a>
+        <a href="#order">Order</a>
+    </div>
+</nav>
+
+<section id="home" class="hero">
+    <h2>Your Perfect Suit for <span>Every Occasion</span></h2>
+    <p style="font-size: 1.1rem;">👰 Wedding | 💼 Office | 🎉 Prom | 🎓 Graduation | 🪘 Cultural</p>
+    <p style="margin: 1rem 0;">Universal House, Luwuum Street Shop No G04 | +256778145979 / +256755905990</p>
+    <a href="#order" class="btn"><i class="fas fa-shopping-cart"></i> Order Now</a>
+    <a href="#fabrics" class="btn btn-outline"><i class="fas fa-tshirt"></i> View Fabrics</a>
+    <a href="#location" class="btn btn-outline"><i class="fas fa-map-marker-alt"></i> Find Us</a>
+</section>
+
+<div class="quote-slider swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">✨ "The right fabric makes the suit. The right suit makes the man."</div>
+        <div class="swiper-slide">✨ "Elegance is the only beauty that never fades." – Audrey Hepburn</div>
+        <div class="swiper-slide">✨ "A well-tailored suit speaks before you do."</div>
+        <div class="swiper-slide">✨ "HK & ARRAY – Tailored for every milestone."</div>
+    </div>
+</div>
+
+<!-- FABRIC LIBRARY -->
+<section id="fabrics" class="section">
+    <h2 class="section-title"><i class="fas fa-tshirt"></i> Our Premium Fabric Collection</h2>
+    <p style="margin-bottom: 1rem;">Browse our fabrics and select one for your custom suit.</p>
+    <div id="fabricsContainer" class="fabrics-grid">
+        <!-- Fabrics will be loaded from admin panel -->
+    </div>
+</section>
+
+<!-- TRACKING -->
+<section id="tracking" class="section">
+    <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Track Your Suit Order</h2>
+    <div class="tracking-container">
+        <div class="tracking-search">
+            <input type="text" id="trackingNumber" placeholder="Enter Order Number (e.g., HK-2025-001)">
+            <button class="btn" onclick="trackOrder()"><i class="fas fa-search"></i> Track</button>
+        </div>
+        <div id="trackingResult" style="display:none;">
+            <div class="order-status-timeline" id="statusTimeline"></div>
+            <div id="orderDetails" style="background:#2a2a2a; padding:1rem; border-radius:15px; margin-top:1rem;"></div>
+        </div>
+        <div id="noOrderMessage" style="display:none; text-align:center; padding:2rem;">
+            <i class="fas fa-box-open" style="font-size:3rem; color:var(--gold);"></i>
+            <p>No order found. Please check your order number.</p>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section">
+    <h2 class="section-title"><i class="fas fa-crown"></i> Our Collections By Occasion</h2>
+    
+    <div class="category-filters">
+        <button class="category-btn active" onclick="filterSuits('all')"><i class="fas fa-tshirt"></i> All Suits</button>
+        <button class="category-btn" onclick="filterSuits('wedding')"><i class="fas fa-heart"></i> Wedding</button>
+        <button class="category-btn" onclick="filterSuits('office')"><i class="fas fa-briefcase"></i> Office</button>
+        <button class="category-btn" onclick="filterSuits('prom')"><i class="fas fa-music"></i> Prom</button>
+        <button class="category-btn" onclick="filterSuits('graduation')"><i class="fas fa-graduation-cap"></i> Graduation</button>
+        <button class="category-btn" onclick="filterSuits('cultural')"><i class="fas fa-drumstick-bite"></i> Cultural</button>
+    </div>
+    
+    <div id="suitsContainer" class="gallery-grid">
+        <!-- Suits will be loaded from admin panel -->
+    </div>
+</section>
+
+<!-- GOOGLE MAPS & LOCATION SECTION -->
+<section id="location" class="section">
+    <h2 class="section-title"><i class="fas fa-map-pin"></i> Visit Our Shop</h2>
+    
+    <div class="shop-info-card">
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="color: var(--gold); margin-bottom: 1rem;"><i class="fas fa-store"></i> Shop Location</h3>
+                <p><i class="fas fa-building"></i> <strong>HK & ARRAY SUITS</strong></p>
+                <p><i class="fas fa-location-dot"></i> Universal House, Luwuum Street</p>
+                <p><i class="fas fa-map-pin"></i> Shop No G04 (Ground Floor)</p>
+                <p><i class="fas fa-city"></i> Kampala, Uganda</p>
+                <br>
+                <p><i class="fas fa-phone"></i> +256 778 145 979</p>
+                <p><i class="fas fa-phone"></i> +256 755 905 990</p>
+                <br>
+                <p><i class="far fa-clock"></i> <strong>Opening Hours:</strong></p>
+                <p>Monday - Saturday: 9:00 AM - 7:00 PM</p>
+                <p>Sunday: Closed</p>
+                <a href="https://maps.google.com/?q=Universal+House+Luwuum+Street+Kampala" target="_blank" class="get-directions-btn">
+                    <i class="fas fa-directions"></i> Get Directions
+                </a>
+            </div>
+            <div style="flex: 2; min-width: 250px;">
+                <h3 style="color: var(--gold); margin-bottom: 1rem;"><i class="fas fa-map"></i> Google Maps</h3>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.751123456789!2d32.5825197!3d0.3136112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb123456789%3A0x123456789abcdef!2sUniversal%20House!5e0!3m2!1sen!2sug!4v1700000000000!5m2!1sen!2sug" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <p style="margin-top: 0.8rem; font-size: 0.8rem; color: #aaa;">
+                    <i class="fas fa-info-circle"></i> Located at Universal House on Luwuum Street, Shop G04 (Ground Floor)
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="section">
+    <h2 class="section-title"><i class="fas fa-star"></i> Client Reviews</h2>
+    <div id="reviewsContainer" class="reviews-grid"></div>
+    <div style="text-align: center; margin-top: 2rem;">
+        <button onclick="openReviewModal()" class="btn"><i class="fas fa-pen"></i> Write a Review</button>
+    </div>
+</section>
+
+<!-- REVIEW MODAL -->
+<div id="reviewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; align-items:center; justify-content:center;">
+    <div style="background:#1a1a1a; padding:2rem; border-radius:20px; max-width:500px; margin:20px;">
+        <h3 style="color:var(--gold);">Write Your Review</h3>
+        <div class="stars-input" style="margin:1rem 0;">
+            <i class="far fa-star" data-rating="1" style="cursor:pointer; font-size:1.5rem;"></i>
+            <i class="far fa-star" data-rating="2" style="cursor:pointer; font-size:1.5rem;"></i>
+            <i class="far fa-star" data-rating="3" style="cursor:pointer; font-size:1.5rem;"></i>
+            <i class="far fa-star" data-rating="4" style="cursor:pointer; font-size:1.5rem;"></i>
+            <i class="far fa-star" data-rating="5" style="cursor:pointer; font-size:1.5rem;"></i>
+        </div>
+        <input type="text" id="reviewerName" placeholder="Your Name">
+        <textarea id="reviewText" placeholder="Your experience..." rows="3"></textarea>
+        <button onclick="submitReview()" class="btn">Submit</button>
+        <button onclick="closeReviewModal()" class="btn btn-outline">Cancel</button>
+    </div>
+</div>
+
+<!-- APPOINTMENT -->
+<section id="appointment" class="section">
+    <h2 class="section-title"><i class="fas fa-calendar-check"></i> Book Your Appointment</h2>
+    <div class="form-container">
+        <form id="appointmentForm">
+            <input type="text" placeholder="Full Name" required id="aptName">
+            <input type="tel" placeholder="Phone Number" required id="aptPhone">
+            <input type="date" required id="aptDate">
+            <input type="time" required id="aptTime">
+            <select id="aptCategory">
+                <option value="wedding">Wedding Suit Consultation</option>
+                <option value="office">Office Suit Consultation</option>
+                <option value="prom">Prom Suit Consultation</option>
+                <option value="graduation">Graduation Suit Consultation</option>
+                <option value="cultural">Cultural Suit Consultation</option>
+            </select>
+            <textarea placeholder="Special requests..." rows="2"></textarea>
+            <button type="submit" class="btn">Book Now</button>
+        </form>
+    </div>
+</section>
+
+<!-- ORDER -->
+<section id="order" class="section">
+    <h2 class="section-title"><i class="fas fa-shopping-cart"></i> Place Your Custom Order</h2>
+    <div class="form-container">
+        <form id="orderForm">
+            <input type="text" placeholder="Full Name" required id="orderName">
+            <input type="tel" placeholder="Phone Number" required id="orderPhone">
+            <input type="email" placeholder="Email" required id="orderEmail">
+            
+            <label>Select Suit Category</label>
+            <select id="suitCategory" required>
+                <option value="">Select Suit Category</option>
+                <option value="wedding">👰 Wedding Suit</option>
+                <option value="office">💼 Office Suit</option>
+                <option value="prom">🎉 Prom Suit</option>
+                <option value="graduation">🎓 Graduation Suit</option>
+                <option value="cultural">🪘 Cultural Suit</option>
+            </select>
+            
+            <label>Select Fabric (Click on a fabric above)</label>
+            <input type="text" id="selectedFabric" placeholder="Fabric will appear here after selection" readonly style="background:#3a3a3a;">
+            <input type="hidden" id="fabricPrice" value="0">
+            
+            <input type="text" placeholder="Suit Name/Model" required id="suitModel">
+            <input type="number" placeholder="Total Price (UGX)" required id="orderPrice">
+            
+            <label>Measurements</label>
+            <textarea placeholder="Chest, Waist, Shoulder, Length, Height or request home visit" rows="3"></textarea>
+            
+            <h3 style="color:var(--gold); margin:1rem 0;">Payment Method</h3>
+            <div class="payment-methods">
+                <div class="payment-btn" onclick="selectPayment('paypal')"><i class="fab fa-paypal"></i> PayPal</div>
+                <div class="payment-btn" onclick="selectPayment('mobile_money')"><i class="fas fa-mobile-alt"></i> Mobile Money</div>
+                <div class="payment-btn" onclick="selectPayment('cash')"><i class="fas fa-money-bill"></i> Cash on Delivery</div>
+            </div>
+            <input type="hidden" id="paymentMethod" value="cash">
+            
+            <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Place Order & Get Tracking Number</button>
+        </form>
+    </div>
+</section>
+
+<footer id="contact">
+    <p><i class="fas fa-map-marker-alt"></i> Universal House, Luwuum Street, Shop No G04, Kampala, Uganda</p>
+    <p><i class="fas fa-phone"></i> +256 778 145 979 | +256 755 905 990</p>
+    <p><i class="fab fa-whatsapp"></i> WhatsApp: +256 778 145 979</p>
+    <p><i class="far fa-envelope"></i> Email: hkandarraysuits@gmail.com</p>
+    <p><i class="far fa-clock"></i> Mon-Sat: 9AM - 7PM | Sunday: Closed</p>
+    <div style="margin: 1rem 0;">
+        <span style="margin:0 0.5rem;">👰 Wedding</span>
+        <span style="margin:0 0.5rem;">💼 Office</span>
+        <span style="margin:0 0.5rem;">🎉 Prom</span>
+        <span style="margin:0 0.5rem;">🎓 Graduation</span>
+        <span style="margin:0 0.5rem;">🪘 Cultural</span>
+    </div>
+    <p>© 2025 HK & ARRAY SUITS | Tailored for Every Occasion</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    new Swiper('.swiper-container', {
+        autoplay: { delay: 4000 },
+        loop: true,
+    });
+
+    let allFabrics = [];
+    let allSuits = [];
+    let selectedFabricObj = null;
+    let currentFilter = 'all';
+
+    // Load data from localStorage (what admin added)
+    function loadData() {
+        let storedFabrics = JSON.parse(localStorage.getItem('hk_array_fabrics'));
+        if (storedFabrics && storedFabrics.length > 0) {
+            allFabrics = storedFabrics;
+        } else {
+            allFabrics = [];
+        }
+        
+        let storedSuits = JSON.parse(localStorage.getItem('hk_array_suits'));
+        if (storedSuits && storedSuits.length > 0) {
+            allSuits = storedSuits;
+        } else {
+            allSuits = [];
+        }
+        
+        loadFabrics();
+        filterSuits('all');
+        loadReviews();
+    }
+    
+    function loadFabrics() {
+        const container = document.getElementById('fabricsContainer');
+        if (allFabrics.length === 0) {
+            container.innerHTML = `<div class="empty-state">
+                <i class="fas fa-tshirt"></i>
+                <h3>No Fabrics Yet</h3>
+                <p>Admin will add fabrics soon. Check back later!</p>
+            </div>`;
+            return;
+        }
+        
+        container.innerHTML = allFabrics.map(fabric => `
+            <div class="fabric-card" onclick="selectFabric(${fabric.id})" id="fabric-${fabric.id}">
+                <img src="${fabric.image}" alt="${fabric.name}" onerror="this.src='https://placehold.co/400x400/333/fff?text=Fabric'">
+                <div class="fabric-info">
+                    <div class="fabric-name">${fabric.name}</div>
+                    <div class="fabric-price">${fabric.price}</div>
+                    <div class="fabric-desc" style="font-size:0.8rem; color:#aaa;">${fabric.description}</div>
+                    <button class="select-fabric-btn" onclick="event.stopPropagation(); selectFabric(${fabric.id})">Select This Fabric</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    window.selectFabric = function(fabricId) {
+        selectedFabricObj = allFabrics.find(f => f.id === fabricId);
+        if (selectedFabricObj) {
+            document.getElementById('selectedFabric').value = `${selectedFabricObj.name} - ${selectedFabricObj.price}`;
+            document.getElementById('fabricPrice').value = selectedFabricObj.price;
+            document.querySelectorAll('.fabric-card').forEach(card => card.classList.remove('selected'));
+            document.getElementById(`fabric-${fabricId}`).classList.add('selected');
+            alert(`✅ Fabric selected: ${selectedFabricObj.name}`);
+        }
+    };
+    
+    window.filterSuits = function(category) {
+        currentFilter = category;
+        let filtered = category === 'all' ? allSuits : allSuits.filter(s => s.category === category);
+        
+        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+        if (event && event.target) {
+            event.target.closest('.category-btn').classList.add('active');
+        }
+        
+        const container = document.getElementById('suitsContainer');
+        const categoryIcons = { wedding: '💍', office: '💼', prom: '🎉', graduation: '🎓', cultural: '🪘' };
+        
+        if (allSuits.length === 0) {
+            container.innerHTML = `<div class="empty-state">
+                <i class="fas fa-tshirt"></i>
+                <h3>No Suits Yet</h3>
+                <p>Admin will add suits soon. Check back later!</p>
+            </div>`;
+            return;
+        }
+        
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="empty-state">
+                <i class="fas fa-filter"></i>
+                <h3>No Suits in This Category</h3>
+                <p>Check other categories or check back later!</p>
+            </div>`;
+            return;
+        }
+        
+        container.innerHTML = filtered.map(suit => `
+            <div class="suit-card">
+                <div style="position: relative;">
+                    ${suit.type === 'video' ? 
+                        `<video controls><source src="${suit.url}" type="video/mp4"></video>` : 
+                        `<img src="${suit.url}" alt="${suit.title}" onerror="this.src='https://placehold.co/600x400/333/fff?text=Image'">`
+                    }
+                    <div class="suit-category-badge">${categoryIcons[suit.category]} ${suit.category.toUpperCase()}</div>
+                </div>
+                <div class="suit-info">
+                    <div class="suit-title">${suit.title}</div>
+                    <div class="suit-price">${suit.price}</div>
+                    <div class="suit-desc">${suit.desc}</div>
+                    <div class="order-actions">
+                        <button class="order-btn" onclick="fillOrder('${suit.title}', '${suit.price.replace('UGX ', '')}', '${suit.category}')">Order Now</button>
+                        <button class="whatsapp-btn" onclick="whatsappOrder('${suit.title}', '${suit.price}')">WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    };
+    
+    // Order Tracking
+    const statusSteps = [
+        { id: 'pending', name: 'Order Received', icon: 'fa-clipboard-list' },
+        { id: 'cutting', name: 'Cutting', icon: 'fa-cut' },
+        { id: 'sewing', name: 'Sewing', icon: 'fa-tshirt' },
+        { id: 'quality', name: 'Quality Check', icon: 'fa-check-double' },
+        { id: 'ready', name: 'Ready', icon: 'fa-box-open' },
+        { id: 'delivered', name: 'Delivered', icon: 'fa-check-circle' }
+    ];
+    
+    function generateOrderNumber() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+        return `HK-${year}-${random}`;
+    }
+    
+    function saveOrder(orderData) {
+        let orders = JSON.parse(localStorage.getItem('hk_array_orders')) || [];
+        const orderNumber = generateOrderNumber();
+        const newOrder = { orderNumber, ...orderData, status: 'pending', createdAt: new Date().toISOString() };
+        orders.push(newOrder);
+        localStorage.setItem('hk_array_orders', JSON.stringify(orders));
+        return newOrder;
+    }
+    
+    window.trackOrder = function() {
+        const trackingNumber = document.getElementById('trackingNumber').value.trim();
+        if (!trackingNumber) { alert('Enter order number'); return; }
+        let orders = JSON.parse(localStorage.getItem('hk_array_orders')) || [];
+        const order = orders.find(o => o.orderNumber === trackingNumber);
+        if (order) {
+            document.getElementById('noOrderMessage').style.display = 'none';
+            document.getElementById('trackingResult').style.display = 'block';
+            const currentIndex = statusSteps.findIndex(s => s.id === order.status);
+            const timelineHtml = statusSteps.map((step, index) => {
+                let statusClass = '';
+                if (index < currentIndex) statusClass = 'completed';
+                if (index === currentIndex) statusClass = 'active';
+                return `<div class="status-step ${statusClass}"><div class="step-icon"><i class="fas ${step.icon}"></i></div><div>${step.name}</div></div>`;
+            }).join('');
+            document.getElementById('statusTimeline').innerHTML = timelineHtml;
+            document.getElementById('orderDetails').innerHTML = `
+                <div><strong>Order:</strong> ${order.orderNumber}</div>
+                <div><strong>Customer:</strong> ${order.customerName}</div>
+                <div><strong>Suit:</strong> ${order.suitName}</div>
+                <div><strong>Fabric:</strong> ${order.fabric || 'Standard'}</div>
+                <div><strong>Amount:</strong> UGX ${order.price}</div>
+                <div><strong>Status:</strong> <span style="color:var(--gold);">${order.status.toUpperCase()}</span></div>
+                ${order.status === 'ready' ? `<div style="margin-top:1rem; background:rgba(212,175,55,0.2); padding:1rem; border-radius:10px;">✅ Your suit is ready! Call +256778145979</div>` : ''}
+            `;
+        } else {
+            document.getElementById('trackingResult').style.display = 'none';
+            document.getElementById('noOrderMessage').style.display = 'block';
+        }
+    };
+    
+    window.fillOrder = function(name, price, category) {
+        document.getElementById('suitModel').value = name;
+        document.getElementById('orderPrice').value = price;
+        document.getElementById('suitCategory').value = category;
+        document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+    };
+    
+    window.whatsappOrder = function(name, price) {
+        window.open(`https://wa.me/256778145979?text=Hello! I'm interested in ${name} at ${price}`, '_blank');
+    };
+    
+    window.selectPayment = function(method) {
+        document.getElementById('paymentMethod').value = method;
+        alert(`Payment: ${method.toUpperCase()}`);
+    };
+    
+    document.getElementById('orderForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fabricInfo = selectedFabricObj ? `${selectedFabricObj.name} (${selectedFabricObj.price}/m)` : 'Standard fabric';
+        const orderData = {
+            customerName: document.getElementById('orderName').value,
+            phone: document.getElementById('orderPhone').value,
+            email: document.getElementById('orderEmail').value,
+            category: document.getElementById('suitCategory').value,
+            suitName: document.getElementById('suitModel').value,
+            price: document.getElementById('orderPrice').value,
+            fabric: fabricInfo,
+            paymentMethod: document.getElementById('paymentMethod').value,
+            measurements: document.querySelector('#orderForm textarea').value
+        };
+        const newOrder = saveOrder(orderData);
+        const adminMsg = `NEW ORDER!%0AOrder: ${newOrder.orderNumber}%0ACustomer: ${orderData.customerName}%0APhone: ${orderData.phone}%0ASuit: ${orderData.suitName}%0AFabric: ${orderData.fabric}%0AAmount: UGX ${orderData.price}`;
+        window.open(`https://wa.me/256778145979?text=${adminMsg}`, '_blank');
+        alert(`✅ ORDER PLACED!\n\nOrder Number: ${newOrder.orderNumber}\n\nUse this number to track your suit.`);
+        document.getElementById('trackingNumber').value = newOrder.orderNumber;
+        e.target.reset();
+        selectedFabricObj = null;
+        document.getElementById('selectedFabric').value = '';
+    });
+    
+    document.getElementById('appointmentForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = `Appointment: ${document.getElementById('aptName').value} - ${document.getElementById('aptPhone').value} on ${document.getElementById('aptDate').value}`;
+        window.open(`https://wa.me/256778145979?text=${encodeURIComponent(msg)}`, '_blank');
+        alert('✅ Appointment booked!');
+        e.target.reset();
+    });
+    
+    function loadReviews() {
+        let reviews = JSON.parse(localStorage.getItem('hk_array_reviews')) || [];
+        const container = document.getElementById('reviewsContainer');
+        if (reviews.length === 0) {
+            container.innerHTML = `<div class="empty-state">
+                <i class="fas fa-star"></i>
+                <h3>No Reviews Yet</h3>
+                <p>Be the first to write a review!</p>
+            </div>`;
+            return;
+        }
+        container.innerHTML = reviews.map(r => `
+            <div class="review-card">
+                <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+                <div class="review-text">"${r.text}"</div>
+                <div class="reviewer">- ${r.name}</div>
+                <small>${r.date}</small>
+            </div>
+        `).join('');
+    }
+    
+    window.submitReview = function() {
+        const name = document.getElementById('reviewerName').value;
+        const text = document.getElementById('reviewText').value;
+        const rating = document.querySelectorAll('.stars-input i.fas').length || 5;
+        if(!name || !text) { alert('Fill all fields'); return; }
+        let reviews = JSON.parse(localStorage.getItem('hk_array_reviews')) || [];
+        reviews.unshift({ name, rating, text, date: new Date().toISOString().split('T')[0] });
+        localStorage.setItem('hk_array_reviews', JSON.stringify(reviews));
+        loadReviews();
+        closeReviewModal();
+        alert('Thank you for your review!');
+    };
+    
+    window.openReviewModal = function() {
+        document.getElementById('reviewModal').style.display = 'flex';
+        document.querySelectorAll('.stars-input i').forEach(star => {
+            star.onclick = function() {
+                const rating = this.getAttribute('data-rating');
+                document.querySelectorAll('.stars-input i').forEach((s, idx) => {
+                    s.className = idx < rating ? 'fas fa-star' : 'far fa-star';
+                });
+            };
+        });
+    };
+    
+    window.closeReviewModal = function() {
+        document.getElementById('reviewModal').style.display = 'none';
+    };
+    
+    loadData();
+    
+    // Refresh data every 5 seconds to show admin updates in real-time
+    setInterval(() => {
+        loadData();
+    }, 5000);
+</script>
+</body>
+</html>
